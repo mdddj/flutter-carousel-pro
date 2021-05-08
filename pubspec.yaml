@@ -1,12 +1,11 @@
 name: carousel_pro_nullsafety
 description: carousel_pro 空安全版本
 version: 1.0.2
-author: JLouage (Julien Louage) <info@jlouage.com>
 homepage: https://github.com/jlouage/flutter-carousel-pro
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.2.0 <2.0.0"
+  flutter: ">=1.2.0"
 
 dependencies:
   flutter:

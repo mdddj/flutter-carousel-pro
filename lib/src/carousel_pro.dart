@@ -3,21 +3,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-enum DotPosition {
-  topLeft,
-  topCenter,
-  topRight,
-  bottomLeft,
-  bottomCenter,
-  bottomRight
-}
+enum DotPosition { topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight }
 
 class Carousel extends StatefulWidget {
   //All the images on this Carousel.
   final List<Widget> images;
 
   //All the images on this Carousel.
-  final defaultImage;
+  final Widget? defaultImage;
 
   //The transition animation timing curve. Default is [Curves.ease]
   final Curve animationCurve;
@@ -148,9 +141,8 @@ class CarouselState extends State<Carousel> {
                 curve: widget.animationCurve,
               );
             } else {
-              _controller!.nextPage(
-                  duration: widget.animationDuration,
-                  curve: widget.animationCurve);
+              _controller!
+                  .nextPage(duration: widget.animationDuration, curve: widget.animationCurve);
             }
           }
         });
@@ -176,9 +168,8 @@ class CarouselState extends State<Carousel> {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: widget.borderRadius
-                        ? BorderRadius.all(widget.radius != null
-                            ? widget.radius!
-                            : Radius.circular(8.0))
+                        ? BorderRadius.all(
+                            widget.radius != null ? widget.radius! : Radius.circular(8.0))
                         : null,
                     image: DecorationImage(
                       //colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
@@ -195,12 +186,10 @@ class CarouselState extends State<Carousel> {
                               stops: [0.0, widget.overlayShadowSize],
                               colors: [
                                 widget.overlayShadowColors != null
-                                    ? widget.overlayShadowColors!
-                                        .withOpacity(1.0)
+                                    ? widget.overlayShadowColors!.withOpacity(1.0)
                                     : Colors.grey[800]!.withOpacity(1.0),
                                 widget.overlayShadowColors != null
-                                    ? widget.overlayShadowColors!
-                                        .withOpacity(0.0)
+                                    ? widget.overlayShadowColors!.withOpacity(0.0)
                                     : Colors.grey[800]!.withOpacity(0.0)
                               ],
                             ),
@@ -211,9 +200,8 @@ class CarouselState extends State<Carousel> {
               } else if (netImage is FadeInImage) {
                 return ClipRRect(
                   borderRadius: widget.borderRadius
-                      ? BorderRadius.all(widget.radius != null
-                          ? widget.radius!
-                          : Radius.circular(8.0))
+                      ? BorderRadius.all(
+                          widget.radius != null ? widget.radius! : Radius.circular(8.0))
                       : null,
                   child: Container(
                       decoration: BoxDecoration(
@@ -238,66 +226,22 @@ class CarouselState extends State<Carousel> {
               }
             },
           ).toList()
-        : [
-            widget.defaultImage is ImageProvider
-                ? Container(
-                    decoration: BoxDecoration(
-                      borderRadius: widget.borderRadius
-                          ? BorderRadius.all(widget.radius != null
-                              ? widget.radius!
-                              : Radius.circular(8.0))
-                          : null,
-                      image: DecorationImage(
-                        //colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
-                        image: widget.defaultImage,
-                        fit: widget.boxFit,
-                      ),
-                    ),
-                    child: widget.overlayShadow
-                        ? Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.center,
-                                stops: [0.0, widget.overlayShadowSize],
-                                colors: [
-                                  widget.overlayShadowColors != null
-                                      ? widget.overlayShadowColors!
-                                          .withOpacity(1.0)
-                                      : Colors.grey[800]!.withOpacity(1.0),
-                                  widget.overlayShadowColors != null
-                                      ? widget.overlayShadowColors!
-                                          .withOpacity(0.0)
-                                      : Colors.grey[800]!.withOpacity(0.0)
-                                ],
-                              ),
-                            ),
-                          )
-                        : Container(),
-                  )
-                : widget.defaultImage,
-          ];
+        : widget.defaultImage != null
+            ? [widget.defaultImage!]
+            : [];
 
-    final bottom = [
-      DotPosition.bottomLeft,
-      DotPosition.bottomCenter,
-      DotPosition.bottomRight
-    ].contains(widget.dotPosition)
-        ? widget.dotVerticalPadding
-        : null;
-    final top = [
-      DotPosition.topLeft,
-      DotPosition.topCenter,
-      DotPosition.topRight
-    ].contains(widget.dotPosition)
-        ? widget.dotVerticalPadding
-        : null;
-    double? left = [DotPosition.topLeft, DotPosition.bottomLeft]
+    final bottom = [DotPosition.bottomLeft, DotPosition.bottomCenter, DotPosition.bottomRight]
             .contains(widget.dotPosition)
+        ? widget.dotVerticalPadding
+        : null;
+    final top = [DotPosition.topLeft, DotPosition.topCenter, DotPosition.topRight]
+            .contains(widget.dotPosition)
+        ? widget.dotVerticalPadding
+        : null;
+    double? left = [DotPosition.topLeft, DotPosition.bottomLeft].contains(widget.dotPosition)
         ? widget.dotHorizontalPadding
         : null;
-    double? right = [DotPosition.topRight, DotPosition.bottomRight]
-            .contains(widget.dotPosition)
+    double? right = [DotPosition.topRight, DotPosition.bottomRight].contains(widget.dotPosition)
         ? widget.dotHorizontalPadding
         : null;
 
@@ -349,12 +293,10 @@ class CarouselState extends State<Carousel> {
                         ? (widget.noRadiusForIndicator
                             ? null
                             : BorderRadius.only(
-                                bottomLeft: widget.radius != null
-                                    ? widget.radius!
-                                    : Radius.circular(8.0),
-                                bottomRight: widget.radius != null
-                                    ? widget.radius!
-                                    : Radius.circular(8.0)))
+                                bottomLeft:
+                                    widget.radius != null ? widget.radius! : Radius.circular(8.0),
+                                bottomRight:
+                                    widget.radius != null ? widget.radius! : Radius.circular(8.0)))
                         : null,
                   ),
                   padding: EdgeInsets.all(widget.indicatorBgPadding),

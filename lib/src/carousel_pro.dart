@@ -14,7 +14,7 @@ enum DotPosition {
 
 class Carousel extends StatefulWidget {
   //All the images on this Carousel.
-  final List? images;
+  final List<Widget> images;
 
   //All the images on this Carousel.
   final defaultImage;
@@ -95,7 +95,7 @@ class Carousel extends StatefulWidget {
   final void Function(int, int)? onImageChange;
 
   Carousel({
-    this.images,
+    required this.images,
     this.animationCurve = Curves.ease,
     this.animationDuration = const Duration(milliseconds: 300),
     this.dotSize = 8.0,
@@ -137,11 +137,11 @@ class CarouselState extends State<Carousel> {
   void initState() {
     super.initState();
 
-    if (widget.images != null && widget.images!.isNotEmpty) {
+    if (widget.images.isNotEmpty) {
       if (widget.autoplay) {
         timer = Timer.periodic(widget.autoplayDuration, (_) {
           if (_controller!.hasClients) {
-            if (_controller!.page!.round() == widget.images!.length - 1) {
+            if (_controller!.page!.round() == widget.images.length - 1) {
               _controller!.animateToPage(
                 0,
                 duration: widget.animationDuration,
@@ -169,9 +169,8 @@ class CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget?> listImages = (widget.images != null &&
-            widget.images!.isNotEmpty)
-        ? widget.images!.map<Widget>(
+    final List<Widget?> listImages = widget.images.isNotEmpty
+        ? widget.images.map<Widget>(
             (netImage) {
               if (netImage is ImageProvider) {
                 return Container(
@@ -183,7 +182,7 @@ class CarouselState extends State<Carousel> {
                         : null,
                     image: DecorationImage(
                       //colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
-                      image: netImage,
+                      image: netImage as ImageProvider,
                       fit: widget.boxFit,
                     ),
                   ),
